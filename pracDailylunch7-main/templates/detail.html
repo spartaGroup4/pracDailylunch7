@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+          crossorigin="anonymous">
+
+    <!-- JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+
+    <!-- 구글폰트 -->
+    <link href="https://fonts.googleapis.com/css?family=Stylish&display=swap" rel="stylesheet">
+    <title>매일점심 글쓰기</title>
+    <style>
+        * {
+            font-family: "Stylish", sans-serif;
+        }
+
+        .container {
+            margin: auto;
+            width: 800px;
+            height: 850px;
+            background-color: wheat;
+        }
+
+        .detail-top {
+            margin: 30px auto;
+            width: 700px;
+            height: 50px;
+            border: black;
+            border-style: double;
+            text-align: center;
+        }
+
+
+        .col-img {
+            margin: auto auto auto 15px;
+            width: 350px;
+            height: 200px;
+            text-align: center;
+            line-height: 180px;
+            border-style: solid;
+
+        }
+
+        .input-title-col {
+            margin: 10px 10px 10px 10px;
+            width: 300px;
+            height: 90px;
+            text-align: center;
+            line-height: 80px;
+            border-style: solid;
+        }
+        .input-category-col {
+            margin: 10px 10px 10px 10px;
+            width: 300px;
+            height: 90px;
+            text-align: center;
+            line-height: 80px;
+            border-style: solid;
+        }
+
+        .row-content {
+            margin: 50px auto;
+            width: 700px;
+            height: 400px;
+            border-style: solid;
+            text-align: left;
+        }
+
+
+        .custom-select {
+            margin: auto;
+            width: 200px;
+        }
+
+        textarea {
+            width: 100%;
+            height: 100%;
+            border: none;
+            resize: none;
+        }
+
+        input {
+            width: 100%;
+            height: 100%;
+            border: none;
+            resize: none;
+        }
+
+        .custom-select {
+            width: 100%;
+            height: 100%;
+            border: none;
+            resize: none;
+        }
+
+    </style>
+
+    <script>
+
+
+        function saveDetail() {
+            let title = $("#title").val();
+            let content = $("#content").val();
+            let category = $("#category").val();
+            let url = $("#url").val();
+
+            if (title == "" || content == "" || category == "--카테고리를 선택하세요--" || url == "") {
+                alert("내용을 전부 입력해주세요")
+            } else {
+
+                $.ajax({
+                    type: "POST",
+                    url: "/detail",
+                    data: {
+                        title_give: title,
+                        content_give: content,
+                        category_give: category,
+                        url_give: url
+                    },
+                    success: function (response) {
+                        alert(response["msg"]);
+                        console.log(url)
+
+                    }
+                });
+            }
+
+        }
+
+
+    </script>
+
+</head>
+<body>
+
+<div class="container">
+
+    <div class="detail-top">
+        <h1 class="card-title">게시판 글쓰기</h1>
+        <div class="row">
+            <div class="col-img">
+                <input id="url"  type="text" placeholder="URL을 입력하세요"
+                    aria-describedby="basic-addon1">
+            </div>
+            <div>
+                <div class="input-title-col">
+                    <input id="title" type="text" class="form-control" placeholder="제목을 입력하세요"
+                           aria-describedby="basic-addon1">
+                </div>
+                <div class="input-category-col">
+
+                    <select class="custom-select" id="category">
+                        <option selected>-- 카테고리를 선택하세요 --</option>
+                        <option value="1">간편식</option>
+                        <option value="2">해장</option>
+                        <option value="3">직원</option>
+                        <option value="3">비오는날</option>
+                    </select>
+
+                </div>
+            </div>
+        </div>
+        <div class="row-content">
+            <textarea id="content" placeholder="내용을 입력해 주세요."></textarea>
+        </div>
+        <button type="submit" onclick="saveDetail()" class="btn btn-primary">글쓰기</button>
+        &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+        <button type="submit" onclick="location.href = '/' " class="btn btn-primary">메인페이지로 이동</button>
+    </div>
+</div>
+
+
+</body>
+</html>
